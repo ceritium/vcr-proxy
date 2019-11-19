@@ -27,6 +27,11 @@ OptionParser.new do |opts|
     VCR::Proxy.config.bind = n
   end
 
+  opts.on_tail('-v', '--version', 'Show program version') do
+    puts VCR::Proxy::VERSION
+    exit
+  end
+
   opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
     exit
