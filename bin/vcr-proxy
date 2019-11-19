@@ -40,7 +40,7 @@ end.parse!
 
 VCR.configure do |config|
   config.cassette_library_dir = VCR::Proxy.config.cassette_library_dir
-  config.hook_into :webmock
+  config.hook_into :faraday
 end
 
 require 'vcr/proxy/app'

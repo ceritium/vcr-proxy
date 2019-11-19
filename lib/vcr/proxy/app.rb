@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'sinatra/base'
-require 'net/http'
+require 'faraday'
 require 'vcr'
 
 # Sinatra App which proxy calls caching the response with VCR
@@ -15,11 +15,8 @@ class App < Sinatra::Base
     vcr_wrapper('post') do
       uri = URI("#{VCR::Proxy.config}#{request.path}")
       uri.query = URI.encode_www_form(request.params)
-      request = Net::HTTP::Post.new(uri)
-      request.body = request.body
-      http = Net::HTTP.new(uri.host, uri.port)
-      response = http.request(request)
-      status response.code
+      response = Faraday.post(uri, request.body.read, 'Content-Type' => 'application/json')
+      status response.status
       response.body
     end
   end
@@ -28,8 +25,8 @@ class App < Sinatra::Base
     vcr_wrapper('get') do
       uri = URI("#{VCR::Proxy.config.endpoint}#{request.path}")
       uri.query = URI.encode_www_form(request.params)
-      response = Net::HTTP.get_response(uri)
-      status response.code
+      response = Faraday.get(uri, request.params, {'Accept' => 'application/json'})
+      status response.status
       response.body
     end
   end
