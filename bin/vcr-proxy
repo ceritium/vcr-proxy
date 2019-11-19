@@ -2,9 +2,8 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
-require 'rubygems'
-require 'vcr'
 require 'optparse'
+require 'vcr'
 require 'vcr/proxy'
 
 ARGV << '-h' if ARGV.empty?
@@ -36,6 +35,7 @@ end.parse!
 
 VCR.configure do |config|
   config.cassette_library_dir = VCR::Proxy.config.cassette_library_dir
+  config.hook_into :webmock
 end
 
 require 'vcr/proxy/app'

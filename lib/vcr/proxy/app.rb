@@ -2,6 +2,7 @@
 
 require 'sinatra/base'
 require 'net/http'
+require 'vcr'
 
 # Sinatra App which proxy calls caching the response with VCR
 class App < Sinatra::Base
