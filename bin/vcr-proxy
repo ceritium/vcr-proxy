@@ -3,8 +3,8 @@
 
 require 'bundler/setup'
 require 'vcr'
-require 'vcr/proxy'
 require 'optparse'
+require 'vcr/proxy'
 
 ARGV << '-h' if ARGV.empty?
 
