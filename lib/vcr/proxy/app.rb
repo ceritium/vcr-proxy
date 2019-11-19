@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'sinatra/base'
+require 'net/http'
 
 # Sinatra App which proxy calls caching the response with VCR
 class App < Sinatra::Base
