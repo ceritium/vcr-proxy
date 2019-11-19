@@ -2,9 +2,9 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'optparse'
 require 'vcr'
 require 'vcr/proxy'
-require 'optparse'
 
 ARGV << '-h' if ARGV.empty?
 
@@ -27,6 +27,11 @@ OptionParser.new do |opts|
     VCR::Proxy.config.bind = n
   end
 
+  opts.on_tail('-v', '--version', 'Show program version') do
+    puts VCR::Proxy::VERSION
+    exit
+  end
+
   opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
     exit
@@ -35,7 +40,7 @@ end.parse!
 
 VCR.configure do |config|
   config.cassette_library_dir = VCR::Proxy.config.cassette_library_dir
-  config.hook_into :webmock
+  config.hook_into :faraday
 end
 
 require 'vcr/proxy/app'
