@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'sinatra'
-class VCR::Proxy::FakeApp < Sinatra::Base
+class FakeApp < Sinatra::Base
   post '/post' do
     response_body.to_json
   end
