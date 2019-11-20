@@ -13,33 +13,53 @@ class App < Sinatra::Base
 
   post '*' do
     vcr_wrapper('post') do
-      uri = URI("#{VCR::Proxy.config}#{request.path}")
-      uri.query = URI.encode_www_form(request.params)
-      response = Faraday.post(uri, request.body.read, request_headers)
+      response = Faraday.post(request_uri, request.body.read, request_headers)
+      relay_response(response)
+    end
+  end
+
+  put '*' do
+    vcr_wrapper('put') do
+      response = Faraday.put(request_uri, request.body.read, request_headers)
+      relay_response(response)
+    end
+  end
+
+  patch '*' do
+    vcr_wrapper('patch') do
+      response = Faraday.patch(request_uri, request.body.read, request_headers)
+      relay_response(response)
+    end
+  end
+
+  delete '*' do
+    vcr_wrapper('delete') do
+      response = Faraday.delete(request_uri, {}, request_headers)
       relay_response(response)
     end
   end
 
   get '*' do
     vcr_wrapper('get') do
-      uri = URI("#{VCR::Proxy.config.endpoint}#{request.path}")
-      uri.query = URI.encode_www_form(request.params)
-      response = Faraday.get(uri, request.params, request_headers)
+      response = Faraday.get(request_uri, {}, request_headers)
       relay_response(response)
     end
   end
 
   def relay_response(response)
-    puts response.headers.to_h
     status response.status
     response.body
   end
 
+  def request_uri
+    uri = URI("#{VCR::Proxy.config.endpoint}#{request.path}")
+    uri.query = URI.encode_www_form(request.params)
+    uri
+  end
+
   def request_headers
     @request_headers ||= env.select { |k, _v| k.start_with? 'HTTP_' }
-                            .collect { |key, val| [key.sub(/^HTTP_/, ''), val] }
-                            .collect { |key, val| "#{key}: #{val}<br>" }
-                            .sort
+                            .transform_keys { |k| k.sub(/^HTTP_/, '').split('_').map(&:capitalize).join('-') }
   end
 
   def vcr_wrapper(verb)

@@ -1,4 +1,6 @@
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
-require "vcr/proxy"
+# frozen_string_literal: true
 
-require "minitest/autorun"
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
+require 'vcr/proxy'
+
+require 'minitest/autorun'

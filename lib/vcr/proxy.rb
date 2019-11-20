@@ -1,9 +1,10 @@
-require "singleton"
-require "vcr/proxy/version"
+# frozen_string_literal: true
+
+require 'singleton'
+require 'vcr/proxy/version'
 
 module VCR
   module Proxy
-
     def self.config
       Config.instance
     end
