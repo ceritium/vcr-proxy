@@ -2,11 +2,10 @@
 
 require 'test_helper'
 require 'rack/test'
-require 'fake_app'
 
 ENV['APP_ENV'] = 'test'
 
-VCR::Proxy.config.endpoint = 'http://localhost:4567'
+VCR::Proxy.config.endpoint = 'http://localhost:9292'
 require 'vcr/proxy/app'
 
 class VCR::Proxy::AppTest < Minitest::Test
@@ -14,14 +13,6 @@ class VCR::Proxy::AppTest < Minitest::Test
 
   def app
     App
-  end
-
-  @fakeapp = Thread.new do
-    VCR::Proxy::FakeApp.run!
-  end
-
-  Minitest.after_run do
-    @fakeapp.kill
   end
 
   def test_get
