@@ -11,6 +11,10 @@ ARGV << '-h' if ARGV.empty?
 OptionParser.new do |opts|
   opts.banner = 'Usage: vcr-proxy [options]'
 
+  opts.on('-r', '--record=once', 'Record mode') do |n|
+    VCR::Proxy.config.record_mode = n.to_sym
+  end
+
   opts.on('-e', '--endpoint=http://example.com', 'Proxy endpoint') do |n|
     VCR::Proxy.config.endpoint = n
   end

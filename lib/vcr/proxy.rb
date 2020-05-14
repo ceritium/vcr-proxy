@@ -14,6 +14,7 @@ module VCR
 
       attr_accessor :endpoint
       attr_accessor :cassette_library_dir
+      attr_accessor :record_mode
       attr_accessor :match_requests_on
       attr_accessor :port
       attr_accessor :bind
@@ -24,6 +25,7 @@ module VCR
         @match_requests_on = %i[path query body method]
         @port = 8099
         @bind = '0.0.0.0'
+        @record_mode = :once
       end
     end
   end

@@ -63,6 +63,7 @@ class App < Sinatra::Base
     end
 
     selected_headers.delete('Host')
+    selected_headers.delete('Accept-Encoding')
 
     selected_headers
   end
@@ -70,8 +71,9 @@ class App < Sinatra::Base
   def vcr_wrapper(verb)
     key = "#{request.path}/#{verb}/#{request.params.to_json}"
     match_requests_on = VCR::Proxy.config.match_requests_on
+    record_mode = VCR::Proxy.config.record_mode
 
-    VCR.use_cassette(key, match_requests_on: match_requests_on) do
+    VCR.use_cassette(key, match_requests_on: match_requests_on, decode_compressed_response: true, record: record_mode) do
       yield
     end
   end
