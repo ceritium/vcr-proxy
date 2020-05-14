@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    vcr-proxy (0.1.9)
+    vcr-proxy (0.1.10)
       faraday
       sinatra
       vcr
@@ -13,27 +13,29 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    faraday (0.17.0)
+    faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     hashdiff (1.0.0)
     minitest (5.13.0)
     multipart-post (2.1.1)
-    mustermann (1.0.3)
+    mustermann (1.1.1)
+      ruby2_keywords (~> 0.0.1)
     public_suffix (4.0.1)
     rack (2.0.8)
-    rack-protection (2.0.7)
+    rack-protection (2.0.8.1)
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rake (13.0.1)
+    ruby2_keywords (0.0.2)
     safe_yaml (1.0.5)
-    sinatra (2.0.7)
+    sinatra (2.0.8.1)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.7)
+      rack-protection (= 2.0.8.1)
       tilt (~> 2.0)
     tilt (2.0.10)
-    vcr (5.0.0)
+    vcr (5.1.0)
     webmock (3.7.6)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
@@ -51,4 +53,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   2.0.1
+   2.1.4
