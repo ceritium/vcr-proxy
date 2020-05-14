@@ -58,9 +58,13 @@ class App < Sinatra::Base
   end
 
   def request_headers
-    @request_headers ||= env.select { |k, _v| k.start_with? 'HTTP_' }.each_with_object({}) do |item, object|
+    selected_headers = env.select { |k, _v| k.start_with? 'HTTP_' }.each_with_object({}) do |item, object|
       object[item[0].sub(/^HTTP_/, '').split('_').map(&:capitalize).join('-')] = item[1]
     end
+
+    selected_headers.delete('Host')
+
+    selected_headers
   end
 
   def vcr_wrapper(verb)
